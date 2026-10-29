@@ -1,6 +1,6 @@
 // ============================================================================
 // FAIL: components/CommandSearchDialog.js
-// KONSEP: Greenish Theme Command Search Dialog
+// KONSEP: Dei Theme Command Search Dialog
 // ============================================================================
 
 "use client";
@@ -36,23 +36,23 @@ export default function CommandSearchDialog({ chores, users, isOpen, onClose }) 
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-black/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-xl bg-white rounded-3xl border border-[#cfe2d4] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-black/60 backdrop-blur-sm">
+      <div className="relative w-full max-w-xl bg-white rounded-[32px] border border-zinc-200 shadow-2xl overflow-hidden">
         {/* Bar Input Carian */}
-        <div className="flex items-center px-4 border-b border-[#e5efe7] bg-[#f7faf8]">
-          <Search className="w-5 h-5 text-[#2e6945] mr-3" />
+        <div className="flex items-center px-5 border-b border-zinc-100 bg-zinc-50">
+          <Search className="w-5 h-5 text-zinc-500 mr-3" />
           <input
             autoFocus
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari apa-apa kerja rumah, barang dapur... (Cmd+K)"
-            className="w-full bg-transparent py-4 text-sm text-[#183123] placeholder-[#8ea897] focus:outline-none"
+            placeholder="Cari apa-apa tugasan... (Cmd+K)"
+            className="w-full bg-transparent py-4 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none font-medium"
           />
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-[#6b8575] hover:text-[#183123] cursor-pointer"
+            className="p-1 rounded-full text-zinc-400 hover:text-zinc-900 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -61,8 +61,8 @@ export default function CommandSearchDialog({ chores, users, isOpen, onClose }) 
         {/* Senarai Hasil Carian */}
         <div className="max-h-[350px] overflow-y-auto p-2 space-y-1">
           {filtered.length === 0 ? (
-            <div className="text-center py-8 text-xs text-[#718d7b]">
-              Tak jumpa langsung kerja &quot;{query}&quot; ni.
+            <div className="text-center py-8 text-xs text-zinc-400">
+              Tiada tugasan sepadan dengan &quot;{query}&quot;.
             </div>
           ) : (
             filtered.map((item) => {
@@ -71,17 +71,17 @@ export default function CommandSearchDialog({ chores, users, isOpen, onClose }) 
                 <div
                   key={item.id}
                   onClick={onClose}
-                  className="p-3 rounded-2xl hover:bg-[#f0f5f1] border border-transparent hover:border-[#d5e2d8] flex items-center justify-between gap-3 cursor-pointer transition-all"
+                  className="p-3.5 rounded-2xl hover:bg-zinc-50 border border-transparent hover:border-zinc-200 flex items-center justify-between gap-3 cursor-pointer transition-all"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-[#eaf4ec] border border-[#cfe2d3] flex items-center justify-center text-[#2e6945] shrink-0">
-                      <CheckSquare className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 border border-purple-200 flex items-center justify-center text-purple-700 shrink-0 font-bold">
+                      ✓
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-[#183123] truncate">
+                      <h4 className="text-xs font-black text-zinc-900 truncate">
                         {item.title}
                       </h4>
-                      <p className="text-[10px] text-[#557560] flex items-center gap-2">
+                      <p className="text-[10px] text-zinc-400 flex items-center gap-2">
                         <span className="capitalize">{item.category}</span>
                         <span>•</span>
                         <span>Due: {item.dueDate}</span>
@@ -91,16 +91,16 @@ export default function CommandSearchDialog({ chores, users, isOpen, onClose }) 
 
                   <div className="flex items-center gap-2 shrink-0">
                     {assignee && (
-                      <span className="text-[10px] bg-[#eef5f0] border border-[#d2ddd4] px-2 py-0.5 rounded-full text-[#355240] font-semibold flex items-center gap-1">
+                      <span className="text-[10px] bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-full text-zinc-700 font-semibold flex items-center gap-1">
                         <UserAvatar
                           name={assignee.name}
-                          colorTheme={assignee.colorTheme || "#2e6945"}
+                          colorTheme={assignee.colorTheme || "#3b82f6"}
                           size={12}
                         />
                         {assignee.name.split(" ")[0]}
                       </span>
                     )}
-                    <span className="text-xs font-bold text-[#2e6945]">
+                    <span className="text-xs font-black text-purple-700">
                       +{item.pointValue}pt
                     </span>
                   </div>

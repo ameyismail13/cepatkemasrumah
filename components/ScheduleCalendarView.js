@@ -1,6 +1,6 @@
 // ============================================================================
 // FAIL: components/ScheduleCalendarView.js
-// KONSEP: Greenish Theme Schedule Calendar View
+// KONSEP: Dei Theme Schedule Timeline
 // ============================================================================
 
 "use client";
@@ -37,18 +37,18 @@ export default function ScheduleCalendarView({ chores, users }) {
 
   return (
     <div className="space-y-6">
-      <div className="p-6 rounded-3xl bg-[#eef4f0] border border-[#d5e2d8]">
+      <div className="p-6 rounded-[32px] bg-[#f8fafc] border border-zinc-200/80">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 rounded-2xl bg-white text-[#2e6945] border border-[#cfe2d4] shadow-xs">
-              <CalendarIcon className="w-5 h-5" />
+            <div className="p-2.5 rounded-2xl bg-white text-zinc-900 border border-zinc-200 shadow-xs">
+              <CalendarIcon className="w-5 h-5 text-sky-600" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-[#183123]">
-                Jadual Tugasan Mingguan (Timeline)
+              <h2 className="text-lg font-black text-zinc-900 tracking-tight">
+                Jadual Tugasan Mingguan 📅
               </h2>
-              <p className="text-xs text-[#52705d]">
-                Tengok apa kerja yang kena siapkan ikut tarikh
+              <p className="text-xs text-zinc-500">
+                Susunan tugas mengikut tarikh akhir
               </p>
             </div>
           </div>
@@ -58,36 +58,36 @@ export default function ScheduleCalendarView({ chores, users }) {
           {days.map((day) => (
             <div
               key={day.dateStr}
-              className={`rounded-2xl p-3 border transition-all ${
+              className={`rounded-3xl p-3.5 border transition-all ${
                 day.isToday
-                  ? "bg-white border-[#2e6945] shadow-md ring-2 ring-[#2e6945]/30"
-                  : "bg-white/80 border-[#d8e6dc]"
+                  ? "bg-white border-purple-300 shadow-md ring-2 ring-purple-100"
+                  : "bg-white/80 border-zinc-200"
               }`}
             >
-              <div className="text-center pb-2 mb-2 border-b border-[#e5efe7]">
-                <span className="text-[11px] uppercase tracking-wider font-bold text-[#62806e]">
+              <div className="text-center pb-2 mb-2 border-b border-zinc-100">
+                <span className="text-[11px] uppercase tracking-wider font-black text-zinc-400">
                   {day.dayName}
                 </span>
                 <div
                   className={`text-xl font-black mt-0.5 ${
-                    day.isToday ? "text-[#1b5334]" : "text-[#183123]"
+                    day.isToday ? "text-purple-900" : "text-zinc-900"
                   }`}
                 >
                   {day.dayNumber}
                 </div>
-                <span className="text-[10px] text-[#718d7b] font-medium">
+                <span className="text-[10px] text-zinc-400 font-bold">
                   {day.monthName}
                 </span>
                 {day.isToday && (
-                  <span className="block mt-1 text-[9px] uppercase font-black text-[#2e6945] bg-[#eaf4ec] border border-[#cfe2d3] rounded-full px-1.5 py-0.5">
-                    Hari Ni
+                  <span className="block mt-1 text-[9px] uppercase font-black text-purple-700 bg-purple-100 rounded-full px-1.5 py-0.5">
+                    Hari Ini
                   </span>
                 )}
               </div>
 
               <div className="space-y-2 mt-2 min-h-[140px]">
                 {day.items.length === 0 ? (
-                  <div className="text-center py-6 text-[11px] text-[#8ea897]">
+                  <div className="text-center py-6 text-[11px] text-zinc-400">
                     Goyang kaki
                   </div>
                 ) : (
@@ -103,29 +103,29 @@ export default function ScheduleCalendarView({ chores, users }) {
                     return (
                       <div
                         key={item.id}
-                        className={`p-2 rounded-xl text-xs border ${
+                        className={`p-2.5 rounded-2xl text-xs border ${
                           item.status === "completed"
                             ? "bg-emerald-50 border-emerald-200 text-zinc-400 line-through"
                             : isOverdue
-                            ? "bg-rose-50 border-rose-200 text-[#183123]"
-                            : "bg-[#f7faf8] border-[#d8e6dc] text-[#183123]"
+                            ? "bg-rose-50 border-rose-200 text-zinc-900"
+                            : "bg-[#f8fafc] border-zinc-200 text-zinc-900"
                         }`}
                       >
                         <div className="font-bold truncate">
                           {item.title}
                         </div>
-                        <div className="flex items-center justify-between text-[10px] text-[#52705d] mt-1.5">
+                        <div className="flex items-center justify-between text-[10px] text-zinc-500 mt-1.5">
                           <span className="flex items-center gap-1 font-semibold">
                             {assignee && (
                               <UserAvatar
                                 name={assignee.name}
-                                colorTheme={assignee.colorTheme || "#2e6945"}
+                                colorTheme={assignee.colorTheme || "#3b82f6"}
                                 size={14}
                               />
                             )}
                             {assignee ? assignee.name.split(" ")[0] : "Semua"}
                           </span>
-                          <span className="text-[#2e6945] font-black">
+                          <span className="text-purple-700 font-black">
                             +{item.pointValue}pt
                           </span>
                         </div>

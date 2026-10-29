@@ -2,19 +2,14 @@
 
 @layer base {
   :root {
-    --background: #dbe4dc;
-    --foreground: #1c2e24;
-    --card: #ffffff;
-    --card-foreground: #1c2e24;
-    --primary: #2e6945;
-    --primary-foreground: #ffffff;
-    --border: #d2ddd4;
+    --background: #d4effc; /* Soft sky blue page backdrop */
+    --foreground: #111827;
   }
 }
 
 body {
-  background-color: #d6e2d8;
-  color: #1e3326;
+  background-color: #d6eefb;
+  color: #111827;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   min-height: 100vh;
   margin: 0;
@@ -22,47 +17,49 @@ body {
   overflow-x: hidden;
 }
 
-/* Greenish Theme Cards & Elements */
-.greenish-main-card {
-  background-color: #eaf1eb;
-  border-radius: 36px;
-  box-shadow: 0 20px 50px -10px rgba(32, 60, 44, 0.12), 0 0 1px 1px rgba(255, 255, 255, 0.6) inset;
+/* Tablet Outer Black Bezel Frame */
+.dei-tablet-frame {
+  background-color: #0d0f11;
+  border-radius: 44px;
+  box-shadow: 0 25px 60px -15px rgba(15, 30, 45, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-.greenish-hero-banner {
-  background: linear-gradient(135deg, #1b5334 0%, #296d45 45%, #3e885b 100%);
+/* Rounded Cards */
+.dei-card {
+  background-color: #ffffff;
   border-radius: 28px;
-  color: #ffffff;
-  position: relative;
-  overflow: hidden;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dei-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.08);
 }
 
-.greenish-card {
-  background-color: #ffffff;
-  border-radius: 24px;
-  border: 1px solid rgba(210, 225, 215, 0.7);
-  box-shadow: 0 4px 20px -2px rgba(20, 50, 30, 0.04);
+/* Pastel Cards (Dei Theme) */
+.dei-pastel-purple {
+  background: linear-gradient(135deg, #f4d9fc 0%, #ecd0f7 100%);
+  border: 1px solid #e9bbf5;
+  color: #3b0764;
 }
 
-.greenish-card-amber {
-  background: linear-gradient(135deg, #fbb839 0%, #f7ab28 100%);
-  border-radius: 24px;
-  color: #1a221d;
-  box-shadow: 0 6px 20px -3px rgba(245, 171, 40, 0.25);
+.dei-pastel-cyan {
+  background: linear-gradient(135deg, #d8f5fc 0%, #cbf0f8 100%);
+  border: 1px solid #bae6fd;
+  color: #0369a1;
 }
 
-.greenish-card-dark {
-  background-color: #13241b;
-  border-radius: 24px;
-  color: #ffffff;
-  box-shadow: 0 6px 25px -4px rgba(15, 30, 20, 0.15);
+.dei-pastel-yellow {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fcd34d;
+  color: #854d0e;
 }
 
-.greenish-row-card {
-  background-color: #ffffff;
-  border-radius: 9999px;
-  border: 1px solid rgba(210, 225, 215, 0.8);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+.dei-pastel-green {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border: 1px solid #86efac;
+  color: #14532d;
 }
 
 /* Custom Scrollbar */
@@ -71,12 +68,13 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #dbe4dc;
+  background: #f1f5f9;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #9ab4a1;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #73967d;
+  background: #94a3b8;
 }

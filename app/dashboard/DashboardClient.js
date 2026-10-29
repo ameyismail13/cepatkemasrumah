@@ -1,6 +1,6 @@
 // ============================================================================
 // FAIL: app/dashboard/DashboardClient.js
-// KONSEP: Greenish Theme Dashboard Layout
+// KONSEP: Dei Look & Feel - Black Bezel Tablet Frame, White Canvas, 3 Counters, Right Sidebar
 // ============================================================================
 
 "use client";
@@ -11,10 +11,11 @@ import KanbanBoard from "@/components/KanbanBoard";
 import ScheduleCalendarView from "@/components/ScheduleCalendarView";
 import LeaderboardView from "@/components/LeaderboardView";
 import RewardsView from "@/components/RewardsView";
+import EventsSidebar from "@/components/EventsSidebar";
+import BottomDock from "@/components/BottomDock";
 import CreateChoreModal from "@/components/CreateChoreModal";
 import CommandSearchDialog from "@/components/CommandSearchDialog";
-import UserAvatar from "@/components/UserAvatar";
-import { Droplets, Sparkles, Thermometer, TrendingUp, CheckCircle, AlertTriangle, Clock } from "lucide-react";
+import { Plus, Bell, Minus, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function DashboardClient({
   currentUser,
@@ -27,208 +28,124 @@ export default function DashboardClient({
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // Statistik & Metrik
-  const totalChores = chores.length;
-  const completedChores = chores.filter((c) => c.status === "completed").length;
-  const pendingApproval = chores.filter(
-    (c) => c.status === "pending_approval"
-  ).length;
-  const overdueCount = chores.filter(
-    (c) =>
-      c.status !== "completed" &&
-      new Date(c.dueDate).getTime() < new Date().setHours(0, 0, 0, 0)
-  ).length;
-
-  const completionRate =
-    totalChores > 0 ? Math.round((completedChores / totalChores) * 100) : 0;
+  // Metrik Statistik ala 26 Total / 2 Completed / 23 Upcoming
+  const totalCount = chores.length;
+  const completedCount = chores.filter((c) => c.status === "completed").length;
+  const upcomingCount = chores.filter((c) => c.status !== "completed").length;
 
   return (
-    <div className="min-h-screen bg-[#d6e2d8] flex flex-col selection:bg-[#2e6945]/20 selection:text-[#183123]">
-      {/* Top Header Greenish */}
-      <TopHeader
-        currentUser={currentUser}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onOpenCreateModal={() => setIsCreateOpen(true)}
-        onOpenSearch={() => setIsSearchOpen(true)}
-      />
+    <div className="min-h-screen bg-[#d6eefb] py-6 px-3 sm:px-8 flex justify-center items-start selection:bg-purple-200">
+      {/* Black Bezel Outer Frame (Tablet Style ala Dei Mockup) */}
+      <div className="w-full max-w-[1440px] dei-tablet-frame overflow-hidden p-2 sm:p-3 shadow-2xl relative">
+        {/* Top Header bar with Dei branding */}
+        <div className="rounded-t-[36px] overflow-hidden">
+          <TopHeader
+            currentUser={currentUser}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onOpenCreateModal={() => setIsCreateOpen(true)}
+            onOpenSearch={() => setIsSearchOpen(true)}
+          />
+        </div>
 
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 flex-1 space-y-6">
-        {/* GREENISH HERO OVERVIEW CARD (Sama macam gambar rujukan) */}
-        <div className="greenish-hero-banner p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-4 max-w-xl">
-            <span className="text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-white/20 text-emerald-100">
-              Famili Kemas Dashboard
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Overview Rumah
-            </h1>
-            <p className="text-sm text-emerald-100/90 leading-relaxed">
-              Hai <span className="font-bold underline text-amber-300">{currentUser.name}</span>! Jom tengok status kebersihan rumah hari ni. Rumah kemas, hati lapang, point pun masuk lebat.
-            </p>
-
-            {/* Quick Metrics Bar ala Greenish */}
-            <div className="flex flex-wrap items-center gap-6 pt-2">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-amber-300">
-                  <Sparkles className="w-4 h-4" />
+        {/* Main Tablet Screen Canvas (White Canvas) */}
+        <div className="bg-white rounded-b-[36px] p-6 sm:p-8 min-h-[820px] flex flex-col gap-6 relative">
+          {/* Main Layout Grid: Left Content (Col 8/9) + Right Sidebar (Col 4/3) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* KIRI: Main Workflow Area */}
+            <div className="lg:col-span-8 xl:col-span-8 space-y-6">
+              {/* Header Row: "My Learning Plan 🕰️" -> "Pelan Kemas Rumah 🕰️" + 3 Stats Counter */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
+                    Pelan Kemas Rumah 🕰️
+                  </h1>
                 </div>
-                <div>
-                  <div className="text-xs text-emerald-200">Tahap Bersih</div>
-                  <div className="text-lg font-black text-white">{completionRate}%</div>
+
+                {/* 3 Pill Counters (Total, Completed, Upcoming) ala Dei mockup */}
+                <div className="flex items-center gap-2.5">
+                  {/* Total */}
+                  <div className="rounded-2xl p-2.5 px-4 bg-[#e0f2fe] border border-sky-200 text-center min-w-[70px] shadow-2xs">
+                    <div className="text-xl font-black text-sky-950 leading-tight">
+                      {totalCount}
+                    </div>
+                    <div className="text-[10px] font-bold text-sky-700 uppercase tracking-wider">
+                      Total
+                    </div>
+                  </div>
+
+                  {/* Completed with Party Popper emoji */}
+                  <div className="rounded-2xl p-2.5 px-4 bg-[#dcfce7] border border-emerald-200 text-center min-w-[75px] shadow-2xs relative">
+                    <span className="absolute -top-2.5 -right-1 text-sm">🎉</span>
+                    <div className="text-xl font-black text-emerald-950 leading-tight">
+                      {completedCount}
+                    </div>
+                    <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
+                      Selesai
+                    </div>
+                  </div>
+
+                  {/* Upcoming */}
+                  <div className="rounded-2xl p-2.5 px-4 bg-zinc-100 border border-zinc-200 text-center min-w-[70px] shadow-2xs">
+                    <div className="text-xl font-black text-zinc-900 leading-tight">
+                      {upcomingCount}
+                    </div>
+                    <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-wider">
+                      Upcoming
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sky-200">
-                  <Droplets className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs text-emerald-200">Dah Setel</div>
-                  <div className="text-lg font-black text-white">{completedChores} / {totalChores}</div>
-                </div>
-              </div>
+              {/* View Switcher: Pelan Tugasan, Kalendar, Juara, Hadiah */}
+              <div>
+                {activeTab === "kanban" && (
+                  <KanbanBoard
+                    chores={chores}
+                    users={users}
+                    currentUser={currentUser}
+                  />
+                )}
 
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-amber-300">
-                  <Thermometer className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs text-emerald-200">Mata Anda</div>
-                  <div className="text-lg font-black text-amber-300">{currentUser.points} pts</div>
-                </div>
+                {activeTab === "calendar" && (
+                  <ScheduleCalendarView
+                    chores={chores}
+                    users={users}
+                    currentUser={currentUser}
+                  />
+                )}
+
+                {activeTab === "leaderboard" && (
+                  <LeaderboardView users={users} activityLogs={activityLogs} />
+                )}
+
+                {activeTab === "rewards" && (
+                  <RewardsView rewards={rewards} currentUser={currentUser} />
+                )}
               </div>
             </div>
-          </div>
 
-          {/* Plant / Mascot illustration container */}
-          <div className="hidden lg:flex flex-col items-center justify-center bg-white/10 backdrop-blur-md rounded-3xl p-5 border border-white/20 text-center shrink-0 w-64 shadow-inner">
-            <div className="text-5xl mb-2">🌿</div>
-            <div className="text-xs font-bold text-white uppercase tracking-wider">
-              Status Rumah
-            </div>
-            <div className="text-sm font-semibold text-emerald-200 mt-0.5">
-              {completionRate >= 70 ? "Kemas & Segar! 🌱" : "Boleh rajin sikit lagi 💪"}
-            </div>
-            <div className="mt-3 flex items-center gap-1.5 text-[11px] bg-white/15 px-3 py-1 rounded-full text-white">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>{users.length} Ahli Aktif</span>
+            {/* KANAN: "My Events 🧐" Sidebar (Ganjaran & Aktiviti Famili) */}
+            <div className="lg:col-span-4 xl:col-span-4 sticky top-6">
+              <EventsSidebar
+                rewards={rewards}
+                currentUser={currentUser}
+                activityLogs={activityLogs}
+              />
             </div>
           </div>
         </div>
 
-        {/* 3 STAT KAD (Growth Analytics, Critical Alerts & Activity Overview) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Kad 1: Kad Gelap (Growth Analytics style) */}
-          <div className="greenish-card-dark p-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                  Rekod Kerajinan
-                </span>
-                <span className="text-[10px] text-zinc-400 bg-white/10 px-2 py-0.5 rounded-full">
-                  Streak
-                </span>
-              </div>
-              <div className="text-2xl font-black text-white">
-                {currentUser.streakDays || 1} Hari Berterusan!
-              </div>
-              <p className="text-xs text-zinc-400 mt-1">
-                Kekalkan momentum tolong kemas rumah setiap hari tanpa henti.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-emerald-300">
-              <span className="flex items-center gap-1">
-                <TrendingUp className="w-3.5 h-3.5" /> +25% kerajinan minggu ni
-              </span>
-            </div>
-          </div>
+        {/* Bottom Floating Black Dock Toolbar (Dei style) */}
+        <BottomDock
+          onOpenCreate={() => setIsCreateOpen(true)}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      </div>
 
-          {/* Kad 2: Kad Kuning/Amber (Critical Alerts style) */}
-          <div className="greenish-card-amber p-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#1e3d2b]">
-                  Perlu Perhatian (Alerts)
-                </span>
-                <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded-full font-bold">
-                  Live
-                </span>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between bg-white/40 p-2 rounded-xl text-xs font-semibold">
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-amber-900" /> Tunggu Semakan:
-                  </span>
-                  <span className="font-black text-amber-950">{pendingApproval} kerja</span>
-                </div>
-                <div className="flex items-center justify-between bg-white/40 p-2 rounded-xl text-xs font-semibold">
-                  <span className="flex items-center gap-1.5">
-                    <AlertTriangle className="w-3.5 h-3.5 text-rose-800" /> Terbabas Due Date:
-                  </span>
-                  <span className="font-black text-rose-900">{overdueCount} kerja</span>
-                </div>
-              </div>
-            </div>
-            <div className="mt-3 text-[11px] font-bold text-amber-950/80">
-              {overdueCount > 0 ? "⚠️ Cepat siapkan kerja tertunggak!" : "✨ Semua kerja mengikut masa."}
-            </div>
-          </div>
-
-          {/* Kad 3: Kad Putih (Activity Overview style) */}
-          <div className="greenish-card p-5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#355742]">
-                  Ringkasan Tugasan
-                </span>
-                <span className="text-[10px] text-[#557763] bg-[#eef5f0] px-2 py-0.5 rounded-full font-bold">
-                  Status
-                </span>
-              </div>
-              <div className="text-2xl font-black text-[#183123]">
-                {completionRate}% Selesai
-              </div>
-              <p className="text-xs text-[#52705d] mt-1">
-                {completedChores} daripada {totalChores} tugasan rumah telah selesai dibersihkan.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-[#e5efe7] flex items-center justify-between text-xs text-[#2e6945] font-bold">
-              <span>Baki {totalChores - completedChores} tugasan aktif</span>
-              <CheckCircle className="w-4 h-4 text-[#2e6945]" />
-            </div>
-          </div>
-        </div>
-
-        {/* Dynamic Views based on Tab */}
-        <div className="pt-2">
-          {activeTab === "kanban" && (
-            <KanbanBoard
-              chores={chores}
-              users={users}
-              currentUser={currentUser}
-            />
-          )}
-
-          {activeTab === "calendar" && (
-            <ScheduleCalendarView
-              chores={chores}
-              users={users}
-              currentUser={currentUser}
-            />
-          )}
-
-          {activeTab === "leaderboard" && (
-            <LeaderboardView users={users} activityLogs={activityLogs} />
-          )}
-
-          {activeTab === "rewards" && (
-            <RewardsView rewards={rewards} currentUser={currentUser} />
-          )}
-        </div>
-      </main>
-
-      {/* Modal Tambah Tugasan Baru */}
+      {/* Modal Cipta Tugasan Baru */}
       {isCreateOpen && (
         <CreateChoreModal
           users={users}
