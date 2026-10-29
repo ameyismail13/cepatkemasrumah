@@ -8,6 +8,7 @@
 import { useState, useTransition } from "react";
 import { loginAction, createUserAction } from "@/app/actions/auth-actions";
 import UserAvatar from "@/components/UserAvatar";
+import PrayerTimeWidget from "@/components/PrayerTimeWidget";
 import { ShieldCheck, KeyRound, CheckCircle2, UserPlus, X, Sparkles } from "lucide-react";
 
 const AVATAR_COLORS = [
@@ -101,14 +102,11 @@ export default function LoginClient({ users }) {
     <div className="min-h-screen bg-[#d6eefb] flex items-center justify-center p-4 sm:p-8">
       {/* Outer Tablet Frame (Dei style) */}
       <div className="w-full max-w-4xl dei-tablet-frame p-2 sm:p-3 shadow-2xl">
-        {/* Top Black Bar with Brand Dei */}
+        {/* Top Black Bar with Brand */}
         <div className="bg-[#0d0f11] text-white px-8 py-5 rounded-t-[36px] flex items-center justify-between border-b border-white/5">
           <div className="flex items-center gap-3">
-            <span className="font-black text-2xl tracking-tight text-white select-none">
-              Dei
-            </span>
-            <span className="text-[11px] font-bold text-zinc-400 bg-white/10 px-2.5 py-0.5 rounded-full">
-              Kemas Rumah
+            <span className="font-black text-xl sm:text-2xl tracking-tight text-white select-none">
+              Cepat Kemas Rumah!
             </span>
           </div>
 
@@ -120,6 +118,9 @@ export default function LoginClient({ users }) {
 
         {/* White Screen Canvas */}
         <div className="bg-white rounded-b-[36px] p-6 sm:p-10">
+          {/* Widget Waktu Solat Auto-Detect Location */}
+          <PrayerTimeWidget />
+
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             {/* Kolum Kiri: Pilihan Ahli */}
             <div className="md:col-span-7 space-y-4">

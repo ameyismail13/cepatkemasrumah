@@ -1,6 +1,6 @@
 // ============================================================================
 // FAIL: components/ChoreCard.js
-// KONSEP: Dei Theme Task Card (Bentuk Rounded Elegan, Badge, Tag, Action Pill)
+// KONSEP: Dei Theme Task Card - Padat, Responsif, Tiada Overflow Kiri/Kanan
 // ============================================================================
 
 "use client";
@@ -16,10 +16,8 @@ import confetti from "canvas-confetti";
 import {
   Clock,
   Sparkles,
-  ArrowRight,
   Trash2,
   Check,
-  CheckCircle2,
   Play,
 } from "lucide-react";
 
@@ -27,7 +25,6 @@ export default function ChoreCard({ chore, users, currentUser }) {
   const [isPending, startTransition] = useTransition();
 
   const assignee = users.find((u) => u.id === chore.assignedToId);
-  const isMine = chore.assignedToId === currentUser.id;
 
   const handleAdvanceStatus = () => {
     let nextStatus = "in_progress";
@@ -68,7 +65,7 @@ export default function ChoreCard({ chore, users, currentUser }) {
 
   return (
     <div
-      className={`relative rounded-3xl p-5 transition-all shadow-sm border ${
+      className={`relative rounded-3xl p-4 transition-all shadow-xs border flex flex-col justify-between w-full overflow-hidden ${
         isInProgress
           ? "dei-pastel-purple shadow-md border-purple-200"
           : isCompleted
@@ -78,126 +75,128 @@ export default function ChoreCard({ chore, users, currentUser }) {
           : "bg-white border-zinc-200/90 hover:border-zinc-300"
       } ${isPending ? "opacity-40 pointer-events-none" : ""}`}
     >
-      {/* Top Row: Category Pill & Points Badge */}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <span
-          className={`text-[10px] uppercase font-black tracking-wider px-2.5 py-0.5 rounded-full ${
-            isInProgress
-              ? "bg-white/60 text-purple-900 border border-purple-200"
-              : "bg-zinc-100 text-zinc-700"
-          }`}
-        >
-          {chore.category === "kitchen" && "Dapur"}
-          {chore.category === "cleaning" && "Kemas"}
-          {chore.category === "laundry" && "Baju"}
-          {chore.category === "outdoor" && "Laman"}
-          {chore.category === "groceries" && "Barang Dapur"}
-          {chore.category === "maintenance" && "Repair"}
-          {!["kitchen", "cleaning", "laundry", "outdoor", "groceries", "maintenance"].includes(chore.category) && chore.category}
-        </span>
+      <div>
+        {/* Top Row: Category Pill & Points Badge */}
+        <div className="flex items-center justify-between gap-1 mb-2">
+          <span
+            className={`text-[9px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full truncate max-w-[100px] ${
+              isInProgress
+                ? "bg-white/70 text-purple-900 border border-purple-200"
+                : "bg-zinc-100 text-zinc-700"
+            }`}
+          >
+            {chore.category === "kitchen" && "Dapur"}
+            {chore.category === "cleaning" && "Kemas"}
+            {chore.category === "laundry" && "Baju"}
+            {chore.category === "outdoor" && "Laman"}
+            {chore.category === "groceries" && "Barang Dapur"}
+            {chore.category === "maintenance" && "Repair"}
+            {!["kitchen", "cleaning", "laundry", "outdoor", "groceries", "maintenance"].includes(chore.category) && chore.category}
+          </span>
 
-        <span
-          className={`text-xs font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 ${
+          <span
+            className={`text-[11px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5 shrink-0 ${
+              isInProgress
+                ? "bg-white text-purple-900 shadow-2xs"
+                : "bg-emerald-50 text-emerald-800 border border-emerald-200"
+            }`}
+          >
+            <Sparkles className="w-2.5 h-2.5 text-amber-500" />+{chore.pointValue}
+          </span>
+        </div>
+
+        {/* Tajuk & Penerangan */}
+        <h3
+          className={`font-black text-sm tracking-tight leading-snug break-words ${
             isInProgress
-              ? "bg-white text-purple-900 shadow-xs"
-              : "bg-emerald-50 text-emerald-800 border border-emerald-200"
+              ? "text-purple-950"
+              : isCompleted
+              ? "line-through text-zinc-400"
+              : "text-zinc-900"
           }`}
         >
-          <Sparkles className="w-3 h-3 text-amber-500" />+{chore.pointValue}
-        </span>
+          {chore.title}
+        </h3>
+
+        {chore.description && (
+          <p
+            className={`text-[11px] mt-1 line-clamp-2 leading-relaxed break-words ${
+              isInProgress ? "text-purple-900/80" : "text-zinc-500"
+            }`}
+          >
+            {chore.description}
+          </p>
+        )}
+
+        {/* Gambar Bukti jika ada */}
+        {chore.verificationImage && (
+          <div className="mt-2.5 relative h-24 w-full rounded-2xl overflow-hidden border border-black/10">
+            <Image
+              src={chore.verificationImage}
+              alt="Bukti Selesai"
+              fill
+              sizes="220px"
+              className="object-cover"
+            />
+            <div className="absolute top-1.5 left-1.5 bg-black/60 backdrop-blur-md text-[9px] text-white font-semibold px-2 py-0.5 rounded-md">
+              Bukti Bergambar 📸
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Tajuk & Penerangan */}
-      <h3
-        className={`font-black text-base tracking-tight leading-snug ${
-          isInProgress
-            ? "text-purple-950"
-            : isCompleted
-            ? "line-through text-zinc-400"
-            : "text-zinc-900"
-        }`}
-      >
-        {chore.title}
-      </h3>
-
-      {chore.description && (
-        <p
-          className={`text-xs mt-1 line-clamp-2 leading-relaxed ${
-            isInProgress ? "text-purple-900/80" : "text-zinc-500"
-          }`}
-        >
-          {chore.description}
-        </p>
-      )}
-
-      {/* Gambar Bukti jika ada */}
-      {chore.verificationImage && (
-        <div className="mt-3 relative h-28 w-full rounded-2xl overflow-hidden border border-black/10">
-          <Image
-            src={chore.verificationImage}
-            alt="Bukti Selesai"
-            fill
-            sizes="280px"
-            className="object-cover"
-          />
-          <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-[10px] text-white font-semibold px-2 py-0.5 rounded-md">
-            Bukti Bergambar 📸
-          </div>
-        </div>
-      )}
-
-      {/* Bahagian Bawah: Status Pill (Completed 🌿, Watching, Upcoming) & Action Pill */}
-      <div className="mt-4 pt-3 border-t border-black/5 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          {/* Status Badge ala Dei mockup */}
+      {/* Bahagian Bawah: Status Pill & Action Button */}
+      <div className="mt-3 pt-2.5 border-t border-black/5 flex items-center justify-between gap-1.5">
+        <div className="flex items-center gap-1.5 min-w-0 flex-1">
+          {/* Status Badge */}
           {isCompleted && (
-            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 truncate">
               Completed 🌿
             </span>
           )}
           {isInProgress && (
-            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-white text-purple-900 shadow-xs flex items-center gap-1">
-              <Clock className="w-3 h-3 text-purple-700" /> Sedang Dibuat
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-purple-900 shadow-2xs flex items-center gap-1 truncate">
+              <Clock className="w-2.5 h-2.5 text-purple-700 shrink-0" /> Sedang Dibuat
             </span>
           )}
           {chore.status === "todo" && (
-            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-zinc-100 text-zinc-600 flex items-center gap-1">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600 truncate">
               Upcoming ⏰
             </span>
           )}
           {isPendingApproval && (
-            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-200">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 truncate">
               Menunggu Semakan
             </span>
           )}
 
           {assignee && (
             <div
-              className="flex items-center gap-1 bg-white/60 p-1 px-2 rounded-full border border-black/5"
+              className="flex items-center gap-1 bg-white/70 p-0.5 px-1.5 rounded-full border border-black/5 shrink-0"
               title={`Ditugaskan kepada ${assignee.name}`}
             >
               <UserAvatar
                 name={assignee.name}
                 colorTheme={assignee.colorTheme || "#3b82f6"}
-                size={16}
+                size={14}
               />
-              <span className="text-[10px] font-bold text-zinc-700 truncate max-w-[60px]">
+              <span className="text-[9px] font-bold text-zinc-700 truncate max-w-[45px]">
                 {assignee.name.split(" ")[0]}
               </span>
             </div>
           )}
         </div>
 
-        {/* Tindakan: Bulat Hitam Check / Play Button ala Dei */}
-        <div className="flex items-center gap-1.5">
+        {/* Tindakan: Butang Tindakan Kanan */}
+        <div className="flex items-center gap-1 shrink-0">
           {currentUser.role === "admin" && (
             <button
               type="button"
               onClick={handleDelete}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
+              className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
               title="Padam Tugasan"
             >
-              <Trash2 className="w-3.5 h-3.5" />
+              <Trash2 className="w-3 h-3" />
             </button>
           )}
 
@@ -205,7 +204,7 @@ export default function ChoreCard({ chore, users, currentUser }) {
             <button
               type="button"
               onClick={handleAdvanceStatus}
-              className="w-8 h-8 rounded-full bg-zinc-950 hover:bg-zinc-800 text-white flex items-center justify-center shadow-md cursor-pointer active:scale-90 transition-all"
+              className="w-7 h-7 rounded-full bg-zinc-950 hover:bg-zinc-800 text-white flex items-center justify-center shadow-xs cursor-pointer active:scale-90 transition-all shrink-0"
               title={
                 chore.status === "todo"
                   ? "Mula Buat"
@@ -215,9 +214,9 @@ export default function ChoreCard({ chore, users, currentUser }) {
               }
             >
               {chore.status === "todo" ? (
-                <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                <Play className="w-3 h-3 fill-current ml-0.5" />
               ) : (
-                <Check className="w-4 h-4 stroke-[3]" />
+                <Check className="w-3.5 h-3.5 stroke-[3]" />
               )}
             </button>
           )}

@@ -116,24 +116,24 @@ export default function KanbanBoard({ chores, users, currentUser }) {
       </div>
 
       {/* Grid Kolum Tugasan */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 items-start w-full">
         {columns.map((col) => (
           <div
             key={col.id}
-            className="bg-[#f8fafc] rounded-[32px] p-4 border border-zinc-200/80 flex flex-col min-h-[480px]"
+            className="bg-[#f8fafc] rounded-[28px] p-3 sm:p-3.5 border border-zinc-200/80 flex flex-col min-h-[480px] w-full overflow-hidden"
           >
             {/* Column Header */}
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-zinc-200/60 px-1">
-              <h3 className="font-black text-xs uppercase tracking-wider text-zinc-800">
+            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-zinc-200/60 px-1">
+              <h3 className="font-black text-xs uppercase tracking-wider text-zinc-800 truncate pr-1">
                 {col.title}
               </h3>
-              <span className={`text-xs font-black px-2 py-0.5 rounded-full ${col.badgeColor}`}>
+              <span className={`text-[11px] font-black px-2 py-0.5 rounded-full shrink-0 ${col.badgeColor}`}>
                 {col.items.length}
               </span>
             </div>
 
             {/* Chores Stack */}
-            <div className="space-y-3 flex-1 overflow-y-auto pr-0.5">
+            <div className="space-y-2.5 flex-1 overflow-y-auto overflow-x-hidden pr-0.5">
               {col.items.length === 0 ? (
                 <div className="h-32 flex flex-col items-center justify-center text-center p-4 border border-dashed border-zinc-300 rounded-2xl">
                   <p className="text-xs text-zinc-400">Tiada tugasan di sini.</p>

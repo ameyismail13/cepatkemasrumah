@@ -43,104 +43,22 @@ export default function TopHeader({
   }, []);
 
   return (
-    <header className="w-full bg-[#0d0f11] text-white px-6 py-3.5 flex items-center justify-between gap-4 border-b border-white/5 relative z-40">
-      {/* Kiri: Logo "Dei" bold typography */}
+    <header className="w-full bg-[#0d0f11] text-white px-6 py-3.5 flex items-center justify-between gap-4 border-b border-white/5 relative z-50">
+      {/* Kiri: Title Jenama */}
       <div className="flex items-center gap-3">
-        <span className="font-black text-2xl tracking-tight text-white select-none">
-          Dei
-        </span>
-        <span className="text-[11px] font-bold text-zinc-400 bg-white/10 px-2 py-0.5 rounded-full hidden sm:inline">
-          Kemas Rumah
+        <span className="font-black text-xl sm:text-2xl tracking-tight text-white select-none">
+          Cepat Kemas Rumah!
         </span>
       </div>
 
-      {/* Tengah: Navigation Icons / Pills */}
-      <nav className="flex items-center gap-1 sm:gap-2">
-        <button
-          type="button"
-          onClick={() => setActiveTab("kanban")}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-            activeTab === "kanban"
-              ? "bg-white text-zinc-950 shadow-sm"
-              : "text-zinc-400 hover:text-white hover:bg-white/10"
-          }`}
-        >
-          <Compass className="w-3.5 h-3.5" />
-          <span>Pelan Tugasan</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("calendar")}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-            activeTab === "calendar"
-              ? "bg-white text-zinc-950 shadow-sm"
-              : "text-zinc-400 hover:text-white hover:bg-white/10"
-          }`}
-          title="Jadual Kalendar"
-        >
-          <Clock className="w-3.5 h-3.5" />
-          <span className="hidden md:inline">Jadual</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("leaderboard")}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-            activeTab === "leaderboard"
-              ? "bg-white text-zinc-950 shadow-sm"
-              : "text-zinc-400 hover:text-white hover:bg-white/10"
-          }`}
-          title="Ranking Juara"
-        >
-          <Users className="w-3.5 h-3.5" />
-          <span className="hidden md:inline">Juara</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("rewards")}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-            activeTab === "rewards"
-              ? "bg-white text-zinc-950 shadow-sm"
-              : "text-zinc-400 hover:text-white hover:bg-white/10"
-          }`}
-          title="Ganjaran Hadiah"
-        >
-          <ShoppingBag className="w-3.5 h-3.5" />
-          <span className="hidden md:inline">Hadiah</span>
-        </button>
-      </nav>
-
-      {/* Kanan: Search pill, Butang Tambah, User Profile (Ellington Thom style) */}
-      <div className="flex items-center gap-2.5">
-        <button
-          type="button"
-          onClick={onOpenSearch}
-          className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-xs text-zinc-300 transition-all cursor-pointer"
-        >
-          <Search className="w-3.5 h-3.5 text-zinc-400" />
-          <span>Search...</span>
-          <kbd className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-zinc-400 font-mono">
-            ⌘K
-          </kbd>
-        </button>
-
-        <button
-          type="button"
-          onClick={onOpenCreateModal}
-          className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs shadow-sm cursor-pointer transition-all active:scale-95"
-        >
-          <Plus className="w-4 h-4 stroke-[3]" />
-          <span className="hidden sm:inline">Tambah Kerja</span>
-        </button>
-
-        {/* User Pill Dropdown gaya gambar rujukan: Avatar + Name + Subtitle + Chevron */}
+      {/* Kanan: User Profile sahaja (Nav tabs, Search & Tambah Kerja ada di Floating Dock) */}
+      <div className="flex items-center gap-3">
+        {/* User Pill Dropdown: Avatar + Name + Subtitle + Chevron */}
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setProfileOpen(!profileOpen)}
-            className="flex items-center gap-2.5 p-1 px-2 rounded-full hover:bg-white/10 transition-all cursor-pointer"
+            className="flex items-center gap-2.5 p-1 px-2.5 rounded-full hover:bg-white/10 transition-all cursor-pointer bg-white/5 border border-white/10"
           >
             <UserAvatar
               name={currentUser.name}

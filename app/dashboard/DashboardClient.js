@@ -11,7 +11,6 @@ import KanbanBoard from "@/components/KanbanBoard";
 import ScheduleCalendarView from "@/components/ScheduleCalendarView";
 import LeaderboardView from "@/components/LeaderboardView";
 import RewardsView from "@/components/RewardsView";
-import EventsSidebar from "@/components/EventsSidebar";
 import BottomDock from "@/components/BottomDock";
 import CreateChoreModal from "@/components/CreateChoreModal";
 import CommandSearchDialog from "@/components/CommandSearchDialog";
@@ -36,9 +35,9 @@ export default function DashboardClient({
   return (
     <div className="min-h-screen bg-[#d6eefb] py-6 px-3 sm:px-8 flex justify-center items-start selection:bg-purple-200">
       {/* Black Bezel Outer Frame (Tablet Style ala Dei Mockup) */}
-      <div className="w-full max-w-[1440px] dei-tablet-frame overflow-hidden p-2 sm:p-3 shadow-2xl relative">
+      <div className="w-full max-w-[1440px] dei-tablet-frame p-2 sm:p-3 shadow-2xl relative">
         {/* Top Header bar with Dei branding */}
-        <div className="rounded-t-[36px] overflow-hidden">
+        <div className="rounded-t-[36px] relative z-30">
           <TopHeader
             currentUser={currentUser}
             activeTab={activeTab}
@@ -49,89 +48,76 @@ export default function DashboardClient({
         </div>
 
         {/* Main Tablet Screen Canvas (White Canvas) */}
-        <div className="bg-white rounded-b-[36px] p-6 sm:p-8 min-h-[820px] flex flex-col gap-6 relative">
-          {/* Main Layout Grid: Left Content (Col 8/9) + Right Sidebar (Col 4/3) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* KIRI: Main Workflow Area */}
-            <div className="lg:col-span-8 xl:col-span-8 space-y-6">
-              {/* Header Row: "My Learning Plan 🕰️" -> "Pelan Kemas Rumah 🕰️" + 3 Stats Counter */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
-                <div className="flex items-center gap-3">
-                  <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
-                    Pelan Kemas Rumah 🕰️
-                  </h1>
-                </div>
-
-                {/* 3 Pill Counters (Total, Completed, Upcoming) ala Dei mockup */}
-                <div className="flex items-center gap-2.5">
-                  {/* Total */}
-                  <div className="rounded-2xl p-2.5 px-4 bg-[#e0f2fe] border border-sky-200 text-center min-w-[70px] shadow-2xs">
-                    <div className="text-xl font-black text-sky-950 leading-tight">
-                      {totalCount}
-                    </div>
-                    <div className="text-[10px] font-bold text-sky-700 uppercase tracking-wider">
-                      Total
-                    </div>
-                  </div>
-
-                  {/* Completed with Party Popper emoji */}
-                  <div className="rounded-2xl p-2.5 px-4 bg-[#dcfce7] border border-emerald-200 text-center min-w-[75px] shadow-2xs relative">
-                    <span className="absolute -top-2.5 -right-1 text-sm">🎉</span>
-                    <div className="text-xl font-black text-emerald-950 leading-tight">
-                      {completedCount}
-                    </div>
-                    <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
-                      Selesai
-                    </div>
-                  </div>
-
-                  {/* Upcoming */}
-                  <div className="rounded-2xl p-2.5 px-4 bg-zinc-100 border border-zinc-200 text-center min-w-[70px] shadow-2xs">
-                    <div className="text-xl font-black text-zinc-900 leading-tight">
-                      {upcomingCount}
-                    </div>
-                    <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-wider">
-                      Upcoming
-                    </div>
-                  </div>
-                </div>
+        <div className="bg-white rounded-b-[36px] p-6 sm:p-8 min-h-[820px] flex flex-col gap-6 relative z-10">
+          <div className="w-full space-y-6">
+            {/* Header Row: "Pelan Kemas Rumah 🕰️" + 3 Stats Counter */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-100">
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight flex items-center gap-2">
+                  Pelan Kemas Rumah 🕰️
+                </h1>
               </div>
 
-              {/* View Switcher: Pelan Tugasan, Kalendar, Juara, Hadiah */}
-              <div>
-                {activeTab === "kanban" && (
-                  <KanbanBoard
-                    chores={chores}
-                    users={users}
-                    currentUser={currentUser}
-                  />
-                )}
+              {/* 3 Pill Counters (Total, Completed, Upcoming) ala Dei mockup */}
+              <div className="flex items-center gap-2.5">
+                {/* Total */}
+                <div className="rounded-2xl p-2.5 px-4 bg-[#e0f2fe] border border-sky-200 text-center min-w-[70px] shadow-2xs">
+                  <div className="text-xl font-black text-sky-950 leading-tight">
+                    {totalCount}
+                  </div>
+                  <div className="text-[10px] font-bold text-sky-700 uppercase tracking-wider">
+                    Total
+                  </div>
+                </div>
 
-                {activeTab === "calendar" && (
-                  <ScheduleCalendarView
-                    chores={chores}
-                    users={users}
-                    currentUser={currentUser}
-                  />
-                )}
+                {/* Completed with Party Popper emoji */}
+                <div className="rounded-2xl p-2.5 px-4 bg-[#dcfce7] border border-emerald-200 text-center min-w-[75px] shadow-2xs relative">
+                  <span className="absolute -top-2.5 -right-1 text-sm">🎉</span>
+                  <div className="text-xl font-black text-emerald-950 leading-tight">
+                    {completedCount}
+                  </div>
+                  <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
+                    Selesai
+                  </div>
+                </div>
 
-                {activeTab === "leaderboard" && (
-                  <LeaderboardView users={users} activityLogs={activityLogs} />
-                )}
-
-                {activeTab === "rewards" && (
-                  <RewardsView rewards={rewards} currentUser={currentUser} />
-                )}
+                {/* Upcoming */}
+                <div className="rounded-2xl p-2.5 px-4 bg-zinc-100 border border-zinc-200 text-center min-w-[70px] shadow-2xs">
+                  <div className="text-xl font-black text-zinc-900 leading-tight">
+                    {upcomingCount}
+                  </div>
+                  <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-wider">
+                    Upcoming
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* KANAN: "My Events 🧐" Sidebar (Ganjaran & Aktiviti Famili) */}
-            <div className="lg:col-span-4 xl:col-span-4 sticky top-6">
-              <EventsSidebar
-                rewards={rewards}
-                currentUser={currentUser}
-                activityLogs={activityLogs}
-              />
+            {/* View Switcher: Pelan Tugasan, Kalendar, Juara, Hadiah */}
+            <div className="w-full">
+              {activeTab === "kanban" && (
+                <KanbanBoard
+                  chores={chores}
+                  users={users}
+                  currentUser={currentUser}
+                />
+              )}
+
+              {activeTab === "calendar" && (
+                <ScheduleCalendarView
+                  chores={chores}
+                  users={users}
+                  currentUser={currentUser}
+                />
+              )}
+
+              {activeTab === "leaderboard" && (
+                <LeaderboardView users={users} activityLogs={activityLogs} />
+              )}
+
+              {activeTab === "rewards" && (
+                <RewardsView rewards={rewards} currentUser={currentUser} />
+              )}
             </div>
           </div>
         </div>
