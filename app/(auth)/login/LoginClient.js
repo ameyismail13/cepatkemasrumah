@@ -7,9 +7,19 @@
 
 import { useState, useTransition } from "react";
 import { loginAction, createUserAction } from "@/app/actions/auth-actions";
+import { logoutMasterAction } from "@/app/actions/master-auth-actions";
 import UserAvatar from "@/components/UserAvatar";
 import PrayerTimeWidget from "@/components/PrayerTimeWidget";
-import { ShieldCheck, KeyRound, CheckCircle2, UserPlus, X, Sparkles } from "lucide-react";
+import {
+  ShieldCheck,
+  KeyRound,
+  CheckCircle2,
+  UserPlus,
+  X,
+  Sparkles,
+  Home,
+  LogOut,
+} from "lucide-react";
 
 const AVATAR_COLORS = [
   "#3b82f6", // Sky Blue (Dei default)
@@ -22,8 +32,8 @@ const AVATAR_COLORS = [
   "#18181b", // Midnight
 ];
 
-export default function LoginClient({ users }) {
-  const [selectedUser, setSelectedUser] = useState(users[0] || null);
+export default function LoginClient({ users, family }) {
+  const [selectedUser, setSelectedUser] = useState(users?.[0] || null);
   const [pin, setPin] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,16 +113,34 @@ export default function LoginClient({ users }) {
       {/* Outer Tablet Frame (Dei style) */}
       <div className="w-full max-w-4xl dei-tablet-frame p-2 sm:p-3 shadow-2xl">
         {/* Top Black Bar with Brand */}
-        <div className="bg-[#0d0f11] text-white px-8 py-5 rounded-t-[36px] flex items-center justify-between border-b border-white/5">
+        <div className="bg-[#0d0f11] text-white px-6 sm:px-8 py-4 sm:py-5 rounded-t-[36px] flex flex-wrap items-center justify-between gap-3 border-b border-white/5">
           <div className="flex items-center gap-3">
             <span className="font-black text-xl sm:text-2xl tracking-tight text-white select-none">
               Cepat Kemas Rumah!
             </span>
+            {family?.familyName && (
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-zinc-300 border border-white/5">
+                <Home className="w-3 h-3 text-emerald-400" />
+                {family.familyName}
+              </span>
+            )}
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-zinc-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>Kiosk Mode</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>Kiosk Mode</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => logoutMasterAction()}
+              title="Log keluar akaun keluarga"
+              className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-white px-2.5 py-1.5 rounded-full hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Tukar Famili</span>
+            </button>
           </div>
         </div>
 
@@ -125,9 +153,16 @@ export default function LoginClient({ users }) {
             {/* Kolum Kiri: Pilihan Ahli */}
             <div className="md:col-span-7 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-xs font-black tracking-wider uppercase text-zinc-800 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-purple-600" /> Pilih Profil Ahli Famili
-                </h2>
+                <div>
+                  <h2 className="text-xs font-black tracking-wider uppercase text-zinc-800 flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-purple-600" /> Pilih Profil Ahli Famili
+                  </h2>
+                  {family?.familyName && (
+                    <p className="text-[11px] text-zinc-500 font-medium">
+                      Keluarga: {family.familyName}
+                    </p>
+                  )}
+                </div>
                 <button
                   type="button"
                   onClick={() => setIsAddUserOpen(true)}
@@ -137,52 +172,70 @@ export default function LoginClient({ users }) {
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 max-h-[350px] overflow-y-auto p-1">
-                {users.map((u) => {
-                  const isSelected = selectedUser?.id === u.id;
-                  return (
-                    <button
-                      key={u.id}
-                      onClick={() => {
-                        setSelectedUser(u);
-                        setPin("");
-                        setError(null);
-                      }}
-                      type="button"
-                      className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center gap-3 relative cursor-pointer ${
-                        isSelected
-                          ? "bg-purple-50/70 border-purple-400 shadow-md ring-2 ring-purple-300"
-                          : "bg-zinc-50 border-zinc-200 hover:bg-white hover:border-zinc-300"
-                      }`}
-                    >
-                      <UserAvatar
-                        name={u.name}
-                        colorTheme={u.colorTheme || "#3b82f6"}
-                        size={42}
-                      />
+              {users.length === 0 ? (
+                <div className="p-8 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-300">
+                  <p className="text-sm font-bold text-zinc-700 mb-1">
+                    Belum ada ahli dalam keluarga ini!
+                  </p>
+                  <p className="text-xs text-zinc-500 mb-4">
+                    Daftar profil pertama untuk mula menggunakan kiosk kemas rumah.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setIsAddUserOpen(true)}
+                    className="px-5 py-2 rounded-full bg-zinc-950 text-white text-xs font-black shadow-md hover:bg-zinc-800 cursor-pointer"
+                  >
+                    + Daftar Ahli Sekarang
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3 max-h-[350px] overflow-y-auto p-1">
+                  {users.map((u) => {
+                    const isSelected = selectedUser?.id === u.id;
+                    return (
+                      <button
+                        key={u.id}
+                        onClick={() => {
+                          setSelectedUser(u);
+                          setPin("");
+                          setError(null);
+                        }}
+                        type="button"
+                        className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center gap-3 relative cursor-pointer ${
+                          isSelected
+                            ? "bg-purple-50/70 border-purple-400 shadow-md ring-2 ring-purple-300"
+                            : "bg-zinc-50 border-zinc-200 hover:bg-white hover:border-zinc-300"
+                        }`}
+                      >
+                        <UserAvatar
+                          name={u.name}
+                          colorTheme={u.colorTheme || "#3b82f6"}
+                          size={42}
+                        />
 
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <span className="font-black text-sm text-zinc-900 truncate">
-                            {u.name}
-                          </span>
-                          {isSelected && (
-                            <CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" />
-                          )}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="font-black text-sm text-zinc-900 truncate">
+                              {u.name}
+                            </span>
+                            {isSelected && (
+                              <CheckCircle2 className="w-4 h-4 text-purple-600 shrink-0" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-zinc-200/80 text-zinc-700 shrink-0">
+                              {u.role === "admin" ? "Kapten" : "Member"}
+                            </span>
+                            <span className="text-xs font-black text-purple-700 truncate">
+                              {u.points} pts
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-zinc-200/80 text-zinc-700 shrink-0">
-                            {u.role === "admin" ? "Kapten" : "Member"}
-                          </span>
-                          <span className="text-xs font-black text-purple-700 truncate">
-                            {u.points} pts
-                          </span>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Kolum Kanan: Keypad PIN */}
@@ -192,10 +245,10 @@ export default function LoginClient({ users }) {
               </div>
 
               <h3 className="text-base font-black text-zinc-900 text-center">
-                Masukkan PIN {selectedUser?.name?.split(" ")[0]}
+                {selectedUser ? `Masukkan PIN ${selectedUser.name?.split(" ")[0]}` : "Pilih Ahli Dulu"}
               </h3>
               <p className="text-xs text-zinc-500 mb-4 text-center">
-                4 digit kod keselamatan
+                {selectedUser ? "4 digit kod keselamatan" : "Klik profil di sebelah untuk masukkan PIN"}
               </p>
 
               {/* Indikator Titik PIN */}

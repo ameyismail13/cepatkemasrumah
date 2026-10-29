@@ -18,6 +18,7 @@ import { Plus, Bell, Minus, Clock, CheckCircle2, AlertCircle } from "lucide-reac
 
 export default function DashboardClient({
   currentUser,
+  family,
   users,
   chores,
   activityLogs,
@@ -40,6 +41,7 @@ export default function DashboardClient({
         <div className="rounded-t-[36px] relative z-30">
           <TopHeader
             currentUser={currentUser}
+            family={family}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             onOpenCreateModal={() => setIsCreateOpen(true)}

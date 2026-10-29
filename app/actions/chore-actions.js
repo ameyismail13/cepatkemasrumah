@@ -58,6 +58,7 @@ export async function createChoreAction(formData) {
   }
 
   const newChore = await saveChore({
+    familyId: user.familyId || "fam_default",
     title,
     description,
     category,
@@ -71,6 +72,7 @@ export async function createChoreAction(formData) {
   });
 
   await logActivity({
+    familyId: user.familyId || "fam_default",
     choreId: newChore.id,
     choreTitle: newChore.title,
     userId: user.id,
@@ -105,6 +107,7 @@ export async function updateChoreStatusAction(
     await updateUserPoints(targetUserId, chore.pointValue);
 
     await logActivity({
+      familyId: chore.familyId || user.familyId || "fam_default",
       choreId: chore.id,
       choreTitle: chore.title,
       userId: user.id,
@@ -118,6 +121,7 @@ export async function updateChoreStatusAction(
     if (chore.recurrence && chore.recurrence !== "none") {
       const nextDue = getNextDueDate(chore.dueDate, chore.recurrence);
       await saveChore({
+        familyId: chore.familyId || user.familyId || "fam_default",
         title: chore.title,
         description: chore.description,
         category: chore.category,
@@ -135,6 +139,7 @@ export async function updateChoreStatusAction(
       updates.verificationImage = verificationImage;
     }
     await logActivity({
+      familyId: chore.familyId || user.familyId || "fam_default",
       choreId: chore.id,
       choreTitle: chore.title,
       userId: user.id,
@@ -144,6 +149,7 @@ export async function updateChoreStatusAction(
     });
   } else if (newStatus === "in_progress") {
     await logActivity({
+      familyId: chore.familyId || user.familyId || "fam_default",
       choreId: chore.id,
       choreTitle: chore.title,
       userId: user.id,
@@ -168,6 +174,7 @@ export async function assignChoreAction(choreId, assignedToId) {
   await updateChore(choreId, { assignedToId });
 
   await logActivity({
+    familyId: chore.familyId || user.familyId || "fam_default",
     choreId: chore.id,
     choreTitle: chore.title,
     userId: user.id,
@@ -193,7 +200,7 @@ export async function claimRewardAction(rewardId) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Tak login lagi ni");
 
-  const rewards = await getRewards();
+  const rewards = await getRewards(user.familyId || "fam_default");
   const reward = rewards.find((r) => r.id === rewardId);
   if (!reward) throw new Error("Tak jumpa reward ni");
 
@@ -206,6 +213,7 @@ export async function claimRewardAction(rewardId) {
   await updateUserPoints(user.id, -reward.cost);
 
   await logActivity({
+    familyId: user.familyId || "fam_default",
     choreTitle: `Hadiah: ${reward.title}`,
     userId: user.id,
     userName: user.name,

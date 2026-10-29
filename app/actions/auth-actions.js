@@ -9,7 +9,12 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getUserById, createUser } from "@/lib/db";
-import { createSessionCookie, logout, verifyPin } from "@/lib/auth";
+import {
+  createSessionCookie,
+  logout,
+  verifyPin,
+  getMasterSession,
+} from "@/lib/auth";
 
 export async function loginAction(formData) {
   const userId = formData.get("userId");
@@ -24,13 +29,20 @@ export async function loginAction(formData) {
     return { error: "Tak jumpa la profil ahli ni." };
   }
 
+  // Sahkan ahli adalah di bawah keluarga master yang sedang aktif
+  const master = await getMasterSession();
+  if (master && user.familyId !== master.id) {
+    return { error: "Profil ini bukan daripada keluarga anda." };
+  }
+
   const isMatch = verifyPin(pin, user.pinHash);
   if (!isMatch) {
-    return { error: "Adoi salah PIN bro! (Cuba tengok hint PIN default: 1234)" };
+    return { error: "Adoi salah PIN bro!" };
   }
 
   await createSessionCookie({
     userId: user.id,
+    familyId: user.familyId,
     name: user.name,
     role: user.role,
     avatarUrl: user.avatarUrl,
@@ -58,8 +70,12 @@ export async function createUserAction(formData) {
     return { error: "PIN mesti ngam-ngam 4 digit nombor tau." };
   }
 
+  const master = await getMasterSession();
+  const familyId = master?.id || "fam_default";
+
   try {
     const newUser = await createUser({
+      familyId,
       name,
       role,
       pin,

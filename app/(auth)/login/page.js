@@ -5,18 +5,23 @@
 
 import { redirect } from "next/navigation";
 import { getUsers } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, getMasterSession } from "@/lib/auth";
 import LoginClient from "./LoginClient";
 
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
+  const master = await getMasterSession();
+  if (!master) {
+    redirect("/master-login");
+  }
+
   const currentUser = await getCurrentUser();
   if (currentUser) {
     redirect("/dashboard");
   }
 
-  const users = await getUsers();
-  return <LoginClient users={users} />;
+  const users = await getUsers(master.id);
+  return <LoginClient users={users} family={master} />;
 }
 
