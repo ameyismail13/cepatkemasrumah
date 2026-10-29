@@ -1,0 +1,32 @@
+[
+  {
+    "id": "u_mom",
+    "name": "Mama",
+    "role": "admin",
+    "pinHash": "$2b$10$rvAxkZEY6NXZskk/SAC1cuhyJozm7FrsnrJkxO7mNX08ZiGMTv5ra",
+    "avatarUrl": "/avatars/avatar-mama.svg",
+    "colorTheme": "#10b981",
+    "points": 600,
+    "streakDays": 12
+  },
+  {
+    "id": "u_dad",
+    "name": "Baba",
+    "role": "admin",
+    "pinHash": "$2b$10$rvAxkZEY6NXZskk/SAC1cuhyJozm7FrsnrJkxO7mNX08ZiGMTv5ra",
+    "avatarUrl": "/avatars/avatar-baba.svg",
+    "colorTheme": "#3b82f6",
+    "points": 380,
+    "streakDays": 8
+  },
+  {
+    "id": "u_isa",
+    "name": "Isa",
+    "role": "member",
+    "pinHash": "$2b$10$rvAxkZEY6NXZskk/SAC1cuhyJozm7FrsnrJkxO7mNX08ZiGMTv5ra",
+    "avatarUrl": "/avatars/avatar-isa.svg",
+    "colorTheme": "#f59e0b",
+    "points": 210,
+    "streakDays": 5
+  }
+]

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-dad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="sil-dad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bg-dad)" />
+  <!-- Male adult silhouette -->
+  <g fill="url(#sil-dad)">
+    <!-- Head -->
+    <circle cx="60" cy="45" r="21" />
+    <!-- Shoulders / Torso -->
+    <path d="M22 104 C22 83 39 77 60 77 C81 77 98 83 98 104 C98 107 95 108 90 108 L30 108 C25 108 22 107 22 104 Z" />
+  </g>
+</svg>
+

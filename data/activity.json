@@ -1,0 +1,114 @@
+[
+  {
+    "choreId": "c_1793177150372",
+    "choreTitle": "Kemas rumah",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "completed",
+    "pointsChanged": 250,
+    "notes": "Tugasan selesai! +250 mata diperoleh.",
+    "id": "act_1793177234489_x5x3",
+    "timestamp": "2026-10-28T08:47:14.489Z"
+  },
+  {
+    "choreId": "c_1793177150372",
+    "choreTitle": "Kemas rumah",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "started",
+    "notes": "Sedang dimulakan.",
+    "id": "act_1793177232986_8j8r",
+    "timestamp": "2026-10-28T08:47:12.986Z"
+  },
+  {
+    "choreTitle": "Ganjaran: Pilih Filem Hujung Minggu",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "reward_claimed",
+    "pointsChanged": -100,
+    "notes": "Menebus hadiah \"Pilih Filem Hujung Minggu\" bernilai 100 mata!",
+    "id": "act_1793177182438_mnu1",
+    "timestamp": "2026-10-28T08:46:22.438Z"
+  },
+  {
+    "choreId": "c_1793177150372",
+    "choreTitle": "Kemas rumah",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "created",
+    "notes": "Dicipta oleh Mama",
+    "id": "act_1793177150375_w7wi",
+    "timestamp": "2026-10-28T08:45:50.375Z"
+  },
+  {
+    "choreId": "c_1793176122709",
+    "choreTitle": "Basuh Kereta",
+    "userId": "u_isa",
+    "userName": "Isa",
+    "action": "created",
+    "notes": "Dicipta oleh Isa",
+    "id": "act_1793176122711_q0to",
+    "timestamp": "2026-10-28T08:28:42.711Z"
+  },
+  {
+    "choreId": "c_1793176042652",
+    "choreTitle": "Basuh Pinggan",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "created",
+    "notes": "Dicipta oleh Mama",
+    "id": "act_1793176042655_9xq3",
+    "timestamp": "2026-10-28T08:27:22.655Z"
+  },
+  {
+    "choreId": "c_5",
+    "choreTitle": "Lipat Kain Baju & Susun Almari",
+    "userId": "u_dad",
+    "userName": "Baba",
+    "action": "started",
+    "notes": "Sedang dimulakan.",
+    "id": "act_1793175005218_z6gg",
+    "timestamp": "2026-10-28T08:10:05.218Z"
+  },
+  {
+    "choreId": "c_2",
+    "choreTitle": "Sapu & Mop Ruang Tamu",
+    "userId": "u_dad",
+    "userName": "Baba",
+    "action": "started",
+    "notes": "Sedang dimulakan.",
+    "id": "act_1793175004194_l340",
+    "timestamp": "2026-10-28T08:10:04.194Z"
+  },
+  {
+    "id": "act_1",
+    "choreId": "c_4",
+    "choreTitle": "Beli Barang Dapur & Sayur Segar",
+    "userId": "u_mom",
+    "userName": "Mama",
+    "action": "completed",
+    "timestamp": "2026-10-27T18:30:00Z",
+    "pointsChanged": 50,
+    "notes": "Selesai dibeli di Lotus's bersama resit."
+  },
+  {
+    "id": "act_2",
+    "choreId": "c_3",
+    "choreTitle": "Siram Pokok Bunga & Bersih Laman",
+    "userId": "u_dad",
+    "userName": "Baba",
+    "action": "submitted_approval",
+    "timestamp": "2026-10-28T10:15:00Z",
+    "notes": "Dah siram semua pasu orkid."
+  },
+  {
+    "id": "act_3",
+    "choreId": "c_1",
+    "choreTitle": "Basuh Pinggan & Bersihkan Singki",
+    "userId": "u_isa",
+    "userName": "Isa",
+    "action": "started",
+    "timestamp": "2026-10-28T13:45:00Z",
+    "notes": "Sedang basuh pinggan lunch."
+  }
+]

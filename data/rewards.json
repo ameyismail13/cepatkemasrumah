@@ -1,0 +1,31 @@
+[
+  {
+    "id": "rew_1",
+    "title": "Pilih Filem Hujung Minggu",
+    "cost": 100,
+    "icon": "Film",
+    "description": "Boleh pilih cerita di Netflix/pawagam untuk tontonan satu keluarga malam Sabtu."
+  },
+  {
+    "id": "rew_2",
+    "title": "Bebas Tugas Sehari (Pass Kemas)",
+    "cost": 150,
+    "icon": "Sparkles",
+    "description": "Dapat pas rehat 1 hari penuh tanpa sebarang tugasan rumah."
+  },
+  {
+    "id": "rew_3",
+    "title": "Pilihan Makan Malam (Family Dinner)",
+    "cost": 200,
+    "icon": "Utensils",
+    "description": "Pilih restoran atau menu masakan istimewa kegemaran kamu."
+  },
+  {
+    "id": "rew_4",
+    "title": "Ais Krim / Bubble Tea Treats",
+    "cost": 60,
+    "icon": "Coffee",
+    "description": "Belanja secawan boba atau aiskrim sundae kegemaran."
+  }
+]
+
